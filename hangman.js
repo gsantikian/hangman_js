@@ -1,20 +1,29 @@
 var sget = require('sget');
 
-var words = ["detroit", "chicago", "boston", "banana", "car"];
+var words = ["detroit", "chicago", "boston", "hello", "banana", "whatever"];
 var word = words[Math.floor(Math.random() * words.length)];
-var wordLength = word.length;
+
 var letters = word.split('');
 
-var numberOfGuesses = 6;
-var guessedLetters = [];
+function Game(word) {
+  this.word = word;
+  this.guessesLeft = 6;
+  this.hintsLeft = 2;
+}
 
-console.log(word);
-console.log(wordLength);
-console.log(letters);
+Game.prototype.decrementGuess = function() {
+  this.guessesLeft -= 1;
+};
 
+Game.prototype.decrementHint = function() {
+  this.hintsLeft -= 1;
+}
 
+game = new Game(word);
 
-// should let user guess a limited number of times (6?)
-// should keep track of the letters the user has already guessed
-// display guesses on request
-// offer up 2 1-letter hints on request
+console.log(game.word);
+console.log(game.guessesLeft);
+game.decrementGuess();
+console.log(game.guessesLeft);
+game.decrementHint();
+console.log(game.hintsLeft);
