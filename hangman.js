@@ -44,6 +44,10 @@ Game.prototype.correctGuess = function(guess) {
   return this.letters.indexOf(guess) >= 0;
 };
 
+Game.prototype.winner = function() {
+  return this.revealedLetters.indexOf('_') < 0;
+}
+
 game = new Game(word);
 game.populateRevealedLetters();
 
@@ -67,8 +71,14 @@ while (true) {
 
     if (game.correctGuess(userInput)) {
       //update revealed letters array
+      if (winner()) {
       //If all letters have been guessed correctly show winning screen
+      console.log("You win!");
+      break;
+      } else {
       //else have user input another letter
+      continue;
+      }
     } else {
       // decrement guesses and have user try again.
       game.decrementGuess();
