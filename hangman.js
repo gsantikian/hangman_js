@@ -36,6 +36,14 @@ Game.prototype.populateRevealedLetters = function() {
   }
 };
 
+Game.prototype.updateRevealedLetters = function() {
+
+};
+
+Game.prototype.correctGuess = function(guess) {
+  return this.letters.indexOf(guess) >= 0;
+};
+
 game = new Game(word);
 game.populateRevealedLetters();
 
@@ -56,11 +64,21 @@ while (true) {
     }
     //If input is a new guess, add letter to guesses array
     game.storeGuess(userInput);
-    //If letter is in letters array, reveal letters.
-    //If all letters have been guessed correctly show winning screen
-    //else have user input another letter
-    //If letter is not in letters array, decrement guesses and have user try again.
-    //Also, check that guesses != 0
+
+    if (correctGuess()) {
+      //update revealed letters array
+      //If all letters have been guessed correctly show winning screen
+      //else have user input another letter
+    } else {
+      // decrement guesses and have user try again.
+      game.decrementGuess();
+      if (game.guesses === 0) {
+        console.log("Game Over.");
+        break;
+      } else {
+        continue;
+      }
+    }
   } else {
     console.log("Invalid input. Please try again.");
   }
