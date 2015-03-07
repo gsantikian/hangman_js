@@ -65,14 +65,14 @@ while (true) {
     //If input is a new guess, add letter to guesses array
     game.storeGuess(userInput);
 
-    if (correctGuess()) {
+    if (game.correctGuess(userInput)) {
       //update revealed letters array
       //If all letters have been guessed correctly show winning screen
       //else have user input another letter
     } else {
       // decrement guesses and have user try again.
       game.decrementGuess();
-      if (game.guesses === 0) {
+      if (game.guessesLeft === 0) {
         console.log("Game Over.");
         break;
       } else {
