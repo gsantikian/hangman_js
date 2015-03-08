@@ -36,8 +36,18 @@ Game.prototype.populateRevealedLetters = function() {
   }
 };
 
-Game.prototype.updateRevealedLetters = function() {
-
+Game.prototype.updateRevealedLetters = function(letter) {
+  var indices = [];
+  for (var i = 0, len = this.letters.length; i < len; i++) {
+    if (letter === this.letters[i]) {
+      console.log("HI");
+      indices.push(i);
+    }
+  }
+  //console.log(indices);
+  for (var i = 0, len = indices.length; i < len; i++) {
+    this.revealedLetters[indices[i]] = letter;
+  }
 };
 
 Game.prototype.correctGuess = function(guess) {
@@ -50,6 +60,7 @@ Game.prototype.winner = function() {
 
 game = new Game(word);
 game.populateRevealedLetters();
+console.log(game.word);
 
 console.log("Welcome to Hangman!");
 
@@ -60,22 +71,21 @@ while (true) {
   } else if (userInput === 'guesses'){
     console.log(game.guesses.sort().join(', '));
   } else if (userInput.length === 1 && re.test(userInput)) {
-    //Check if letter has already been guessed
-    //If already guessed, have user try again
     if (game.DuplicateGuess(userInput)) {
       console.log("You have already guessed that letter. Try again.");
       continue;
     }
-    //If input is a new guess, add letter to guesses array
     game.storeGuess(userInput);
-
     if (game.correctGuess(userInput)) {
       //update revealed letters array
-      if (winner()) {
+      game.updateRevealedLetters(userInput);
+      if (game.winner()) {
       //If all letters have been guessed correctly show winning screen
+      console.log(game.revealedLetters.join());
       console.log("You win!");
       break;
       } else {
+      console.log(game.revealedLetters.join());
       //else have user input another letter
       continue;
       }
