@@ -40,11 +40,9 @@ Game.prototype.updateRevealedLetters = function(letter) {
   var indices = [];
   for (var i = 0, len = this.letters.length; i < len; i++) {
     if (letter === this.letters[i]) {
-      console.log("HI");
       indices.push(i);
     }
   }
-  //console.log(indices);
   for (var i = 0, len = indices.length; i < len; i++) {
     this.revealedLetters[indices[i]] = letter;
   }
@@ -56,6 +54,20 @@ Game.prototype.correctGuess = function(guess) {
 
 Game.prototype.winner = function() {
   return this.revealedLetters.indexOf('_') < 0;
+};
+
+Game.prototype.hintLetter = function() {
+  var indices = [];
+  var hintLetters = [];
+  for (var i = 0, len = this.revealedLetters.length; i < len; i++) {
+    if (this.revealedLetters[i] === '_') {
+      indices.push(i);
+    }
+  }
+  for (var i = 0, len = indices.length; i < len; i++) {
+    hintLetters.push(this.letters[indices[i]]);
+  }
+  return hintLetters[Math.floor(Math.random() * hintLetters.length)];
 }
 
 game = new Game(word);
@@ -67,7 +79,13 @@ console.log("Welcome to Hangman!");
 while (true) {
   var userInput = sget("Enter a letter or type 'hint' or 'guesses':").trim().toLowerCase();
   if (userInput === 'hint') {
-    console.log("HINT!!!!");
+    if (game.hintsLeft === 0) {
+      console.log("Sorry, no hints left.");
+    } else {
+      game.updateRevealedLetters(game.hintLetter());
+      console.log(game.revealedLetters.join(' '))
+      game.decrementHint();
+    }
   } else if (userInput === 'guesses'){
     console.log(game.guesses.sort().join(', '));
   } else if (userInput.length === 1 && re.test(userInput)) {
@@ -81,11 +99,11 @@ while (true) {
       game.updateRevealedLetters(userInput);
       if (game.winner()) {
       //If all letters have been guessed correctly show winning screen
-      console.log(game.revealedLetters.join());
+      console.log(game.revealedLetters.join(' '));
       console.log("You win!");
       break;
       } else {
-      console.log(game.revealedLetters.join());
+      console.log(game.revealedLetters.join(' '));
       //else have user input another letter
       continue;
       }
