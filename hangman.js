@@ -68,7 +68,7 @@ Game.prototype.hintLetter = function() {
     hintLetters.push(this.letters[indices[i]]);
   }
   return hintLetters[Math.floor(Math.random() * hintLetters.length)];
-}
+};
 
 game = new Game(word);
 game.populateRevealedLetters();
@@ -82,10 +82,10 @@ while (true) {
       console.log("Sorry, no hints left.");
     } else {
       game.updateRevealedLetters(game.hintLetter());
-      console.log(game.revealedLetters.join(' '))
+      console.log(game.revealedLetters.join(' '));
       game.decrementHint();
     }
-  } else if (userInput === 'guesses'){
+  } else if (userInput === 'guesses') {
     console.log(game.guesses.sort().join(', '));
   } else if (userInput.length === 1 && re.test(userInput)) {
     if (game.DuplicateGuess(userInput)) {
@@ -96,12 +96,12 @@ while (true) {
     if (game.correctGuess(userInput)) {
       game.updateRevealedLetters(userInput);
       if (game.winner()) {
-      console.log(game.revealedLetters.join(' '));
-      console.log("You win!");
-      break;
+        console.log(game.revealedLetters.join(' '));
+        console.log("You win!");
+        break;
       } else {
-      console.log(game.revealedLetters.join(' '));
-      continue;
+        console.log(game.revealedLetters.join(' '));
+        continue;
       }
     } else {
       game.decrementGuess();
