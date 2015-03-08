@@ -70,6 +70,10 @@ Game.prototype.hintLetter = function() {
   return hintLetters[Math.floor(Math.random() * hintLetters.length)];
 };
 
+Game.prototype.gameOver = function() {
+  return game.guessesLeft === 0;
+}
+
 game = new Game(word);
 game.populateRevealedLetters();
 
@@ -105,7 +109,7 @@ while (true) {
       }
     } else {
       game.decrementGuess();
-      if (game.guessesLeft === 0) {
+      if (game.gameOver()) {
         console.log("Game Over.");
         break;
       } else {
