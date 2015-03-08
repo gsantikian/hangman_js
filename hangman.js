@@ -72,7 +72,7 @@ Game.prototype.hintLetter = function() {
 
 Game.prototype.gameOver = function() {
   return game.guessesLeft === 0;
-}
+};
 
 game = new Game(word);
 game.populateRevealedLetters();
