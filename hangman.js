@@ -72,7 +72,6 @@ Game.prototype.hintLetter = function() {
 
 game = new Game(word);
 game.populateRevealedLetters();
-console.log(game.word);
 
 console.log("Welcome to Hangman!");
 
@@ -95,20 +94,16 @@ while (true) {
     }
     game.storeGuess(userInput);
     if (game.correctGuess(userInput)) {
-      //update revealed letters array
       game.updateRevealedLetters(userInput);
       if (game.winner()) {
-      //If all letters have been guessed correctly show winning screen
       console.log(game.revealedLetters.join(' '));
       console.log("You win!");
       break;
       } else {
       console.log(game.revealedLetters.join(' '));
-      //else have user input another letter
       continue;
       }
     } else {
-      // decrement guesses and have user try again.
       game.decrementGuess();
       if (game.guessesLeft === 0) {
         console.log("Game Over.");
